@@ -1,61 +1,44 @@
 
 import React from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { AppBar, Toolbar, Typography, Button, Box, IconButton, Container } from '@mui/material';
 
 const TopNav = () => {
   const navigate = useNavigate();
-  const isAuthenticated = localStorage.getItem('authToken');
+  const isAuthenticated = Boolean(localStorage.getItem('authToken'));
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     navigate('/login');
   };
-
+  
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
-      <img className="logo" src='https://img.icons8.com/?size=100&id=123603&format=png&color=000000' alt='Logo' />
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Link
-            as={NavLink}
-            to="/"
-            end
-            className={({ isActive }) => (isActive ? 'active' : '')}
-          >
-            Home
-          </Nav.Link>
-          <Nav.Link
-            as={NavLink}
-            to="/about"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-          >
-            About
-          </Nav.Link>
-          <Nav.Link
-            as={NavLink}
-            to="/contact"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-          >
-            Contact
-          </Nav.Link>
-          <Nav.Link
-            as={NavLink}
-            to="/users"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-          >
-            Users
-          </Nav.Link>
-          {isAuthenticated ? (
-            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-          ) : (
-            <Nav.Link as={Link} to="/login">Login</Nav.Link>
-          )}
-        </Nav>
-      </Navbar.Collapse>
-
-    </Navbar>
+    <AppBar position="static" sx={{ bgcolor: 'black' }}>
+      <Container maxWidth="xl">
+        <Toolbar>
+          
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+          <img
+              src='https://img.icons8.com/?size=100&id=123603&format=png&color=000000'
+              alt='Logo'
+              style={{ height: '40px', width: 'auto', marginRight: '10px' }}
+            />
+           
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'end', width: '100%' ,}}>
+            <Button color="inherit" component={NavLink}  to="/"  sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'},'&:Mui-selected':{background:'purple'}}} end>Home</Button>
+            <Button color="inherit" component={NavLink} to="/about"  sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'}}} >About</Button>
+            <Button color="inherit" component={NavLink} to="/contact" sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'}}}>Contact</Button>
+            <Button color="inherit" component={NavLink} to="/users" sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'}}}>Users</Button>
+            {isAuthenticated ? (
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            ) : (
+              <Button color="inherit" component={Link} to="/login" sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'}}}>Login</Button>
+            )}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

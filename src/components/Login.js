@@ -1,7 +1,7 @@
 
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Container, Typography, Box, Alert } from '@mui/material';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,41 +11,62 @@ const Login = () => {
 
   const handleLogin = () => {
     if (username === 'lakshmi' && password === 'hudini') {
-      localStorage.setItem('authToken', 'sample_token'); 
-      navigate('/'); 
+      localStorage.setItem('authToken', 'sample_token');
+      navigate('/');
     } else {
-      setError('Invalid credentials'); 
+      setError('Invalid credentials');
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>}
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          mt: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h3">
+          Login
+        </Typography>
+        {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+        <Box component="form" noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            fullWidth
             id="username"
-            type="text"
+            label="Username"
+            name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            autoComplete="username"
+            autoFocus
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
+          <TextField
+            margin="normal"
+            fullWidth
+            name="password"
+            label="Password"
             type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            autoComplete="current-password"
           />
-        </div>
-        <button className="login-button" onClick={handleLogin}>Login</button>
-      </div>
-    </div>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleLogin}
+          >
+            Login
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

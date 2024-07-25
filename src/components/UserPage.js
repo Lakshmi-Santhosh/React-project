@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchUsers } from '../api';
-import { Container, ListGroup, ListGroupItem, Spinner } from 'react-bootstrap';
+import { Container, List, ListItem, CircularProgress, Typography, Box, Alert } from '@mui/material';
 
 export const UserPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const getUsers = async () => {
       try {
         const usersData = await fetchUsers();
-        setUsers(usersData);
+        setUsers(usersData);  
       } catch (error) {
-        console.error("Error fetching users:", error);
+        setError("ERROR FETCHING.");
       } finally {
-        setTimeout(() => setLoading(false), 500); 
+        setTimeout(() => setLoading(false), 300);
       }
     };
     getUsers();
@@ -23,32 +25,53 @@ export const UserPage = () => {
 
   if (loading) {
     return (
-        <Container 
-        className="d-flex justify-content-center align-items-center" 
-        style={{ minHeight: '100vh' }}
+      <Container
+        maxWidth="sm"
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}
       >
-        <div className="text-center">
-          <Spinner animation="border" role="status" style={{ width: '3rem', height: '3rem' }}>
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-          <p className="mt-3">Loading users...</p>
-        </div>
+        <Box textAlign="center">
+          <CircularProgress size={60} />
+          <Typography variant="body1" sx={{ mt: 2 }}>Loading users...</Typography>
+        </Box>
       </Container>
     );
   }
 
   return (
-    <Container className="my-4">
-      <h1 className="text-center mb-4">Users</h1>
-      <ListGroup>
-        {users.map(user => (
-          <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
-            <Link to={`/user/${user.id}`} className="text-decoration-none text-dark">
-              {user.name}
-            </Link>
-          </ListGroupItem>
-        ))}
-      </ListGroup>
+    <Container maxWidth="sm" sx={{ my: 4 }}>
+      {error ? (
+        <Box sx={{ mb: 4 }}>
+          <Alert severity="error">{error}</Alert>
+        </Box>
+      ) : (
+        <>
+          <Typography variant="h4" align="center" gutterBottom>Users</Typography>
+          <Box sx={{ border: '1px solid #e0e0e0', borderRadius: 2, boxShadow: 3, p: 2, backgroundColor: '#f5f5f5' }}>
+            <List>
+              {users.map(user => (
+                <ListItem
+                  key={user.id}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid #e0e0e0',
+                    py: 1,
+                    '&:hover': {
+                      backgroundColor: '#fff',
+                      cursor: 'pointer',
+                    },
+                  }}
+                >
+                  <Link to={`/user/${user.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Typography variant="body1">{user.name}</Typography>
+                  </Link>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </>
+      )}
     </Container>
   );
 };
