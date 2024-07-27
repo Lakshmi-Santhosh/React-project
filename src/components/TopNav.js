@@ -17,13 +17,14 @@ const TopNav = () => {
     <AppBar position="static" sx={{ bgcolor: 'black' }}>
       <Container maxWidth="xl">
         <Toolbar>
-          
+          <Typography>
           <img
               src='https://img.icons8.com/?size=100&id=123603&format=png&color=000000'
               alt='Logo'
               style={{ height: '40px', width: 'auto', marginRight: '10px' }}
             />
            
+          </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'end', width: '100%' ,}}>
             <Button color="inherit" component={NavLink}  to="/"  sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'},'&:Mui-selected':{background:'purple'}}} end>Home</Button>
             <Button color="inherit" component={NavLink} to="/about"  sx={{'&:active': {  background:'blue'} ,'&:focus':{background:'blue'},'&:hover':{background:'blue'}}} >About</Button>
