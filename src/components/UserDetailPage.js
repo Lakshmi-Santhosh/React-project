@@ -29,7 +29,6 @@ export const UserDetailPage = () => {
   if (loading) {
     return (
       <Container
-        maxWidth="sm"
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}
       >
         <Box textAlign="center">

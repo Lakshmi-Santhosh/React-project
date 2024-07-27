@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Container, Typography, Paper, Box } from '@mui/material';
 
 export const Contact = () => {
@@ -28,3 +29,6 @@ export const Contact = () => {
     </Container>
   );
 };
+
+
+ 

@@ -11,7 +11,8 @@ import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute'; 
 import { UserDetailPage } from './components/UserDetailPage';
 import { UserPage } from './components/UserPage';
-
+import { Charts } from './components/Charts';
+ 
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/users' element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
         <Route path='/user/:id' element={<ProtectedRoute><UserDetailPage /></ProtectedRoute>} />
+        <Route path='/chart' element={<ProtectedRoute><Charts/></ProtectedRoute>}/>
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
